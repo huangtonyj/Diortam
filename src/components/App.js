@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
-import mockResponse from '../api/event_data';
+import mockAPI from '../api/mockAPI';
 import './App.css';
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  state = {};
 
-  componentDidMount() {
-    // Used setTimeout to mimic an async api call after a random delay.    
-    setTimeout(() => this.setState({events: mockResponse}), Math.random() * 1000)
-  }
+  async componentDidMount() {
+    const response = await mockAPI();
+
+    this.setState({events: response.mockResponse.events})
+  };
 
 
   render() {
@@ -24,6 +22,9 @@ class App extends Component {
     // filter eventsIndex
       // text search
       // score at least search
+
+      console.log(this.state);
+
 
     return (
       <div className="App">
