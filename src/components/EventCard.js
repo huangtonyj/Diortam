@@ -1,46 +1,46 @@
-// import React from 'react'
+import React, { Component } from 'react'
+import PredictionBox from './PredictionBox';
 
-// export default function EventCard({event}) {
-//   const {imageSource, predictions, timestamp, videoStream} = event;
+export default class EventCard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {img: {h: 0, w: 0}};
+  }
+  
+  onImgLoad = ({target: img}) => {
+    this.setState({img: {
+      h: img.offsetHeight, 
+      w: img.offsetWidth,
+    }})
+  }
+  
+  render() {
+    const {imageSource, predictions, timestamp, videoStream} = this.props.event;
 
-//   console.log(predictions);
-//   return (
-  //     <div className="event-card">
-  //       <img src={imageSource} alt={`${videoStream} ${timestamp}`}/>
-  //       <div className="prediction-box"></div>
-  //     </div>
-  //   )
-  // }
-  
-  
-  import React, { Component } from 'react'
-  
-  export default class EventCard extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {dimensions: {}};
-    }
-    
-    onImgLoad = ({target: img}) => {
-      // console.log(img.offsetHeight);
-      // console.log(img.offsetWidth);
-      this.setState({
-        h: img.offsetHeight, 
-        w: img.offsetWidth
-      })
-    }
-    
-    render() {
-      const {imageSource, predictions, timestamp, videoStream} = this.props.event;
+    const predictionBoxes = predictions.map((prediction, idx) => {
       return (
-        <div>
-          <img 
-            src={imageSource} 
-            alt={`${videoStream} ${timestamp}`}
-            onLoad={this.onImgLoad}
-          />
-          <div className="prediction-box"></div>
-        </div>
+        <PredictionBox
+          key={`${videoStream} ${timestamp} ${idx}`}
+          img={this.state.img}
+          boundingBox={prediction.boundingBox}
+          idx={idx + 1}
+          color={COLORS[idx % COLORS.length]}
+        />
       )
-    }
+    })
+
+    return (
+      <div className="event-card">
+        <img 
+          src={imageSource}
+          alt={`${videoStream} ${timestamp}`}
+          onLoad={this.onImgLoad}
+        />
+
+        {predictionBoxes}
+      </div>
+    )
+  }
 }
+
+const COLORS = ['red', 'yellow', 'white', 'pink'];

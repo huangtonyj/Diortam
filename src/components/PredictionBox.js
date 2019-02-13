@@ -13,7 +13,7 @@ export default function PredictionBox({img, boundingBox, idx, color}) {
       }}
     >
 
-    {idx}
+      {idx}
 
     </div>
   )
