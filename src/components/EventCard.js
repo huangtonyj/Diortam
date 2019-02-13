@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PredictionBox from './PredictionBox';
+import PredictionScore from './PredictionScore';
 
 export default class EventCard extends Component {
   constructor(props) {
@@ -29,6 +30,17 @@ export default class EventCard extends Component {
       )
     })
 
+    const predictionScores = predictions.map((prediction, idx) => {
+      return (
+        <PredictionScore
+          key={`${videoStream} ${timestamp} ${idx}`}
+          scores={prediction.scores}
+          idx={idx + 1}
+          color={COLORS[idx % COLORS.length]}
+        />
+      )
+    })
+
     return (
       <div className="event-card">
         <img 
@@ -38,7 +50,12 @@ export default class EventCard extends Component {
         />
 
         {predictionBoxes}
+
+        {predictionScores}
+
       </div>
+
+      
     )
   }
 }
