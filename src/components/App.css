@@ -4,13 +4,6 @@
 
 .prediction-box {
   position: absolute;
-  color: #FFFFFF;
   font-weight: bold;
   z-index: 2;
-
-  border: 1px solid red;
-  top: 100px;
-  left: 100px;
-  height: 100px;
-  width: 100px;
 }
