@@ -1,8 +1,6 @@
 import React from 'react'
 
 export default function PredictionScore({scores, idx, color}) {
-  console.log(scores)
-
   scores = scores.map(score => {
     return (
       <tr>
@@ -18,6 +16,7 @@ export default function PredictionScore({scores, idx, color}) {
 
   return (
     <table className="ui celled table" style={{borderColor: `${color}`}}>
+      <th>{idx}</th>
       {scores}
     </table>
   )
