@@ -7,9 +7,14 @@ class App extends Component {
   state = {};
 
   async componentDidMount() {
-    const response = await mockAPI();
+    let response = await mockAPI();
+    const events = {};
 
-    this.setState({events: response.mockResponse.events})
+    response.mockResponse.events.forEach(({imageSource, predictions, timestamp, videoStream}) => {
+      if (!events[videoStream]) { events[videoStream] = {}; }
+      events[videoStream][timestamp] = {imageSource, predictions}
+      });
+    this.setState({events})
   };
 
 
