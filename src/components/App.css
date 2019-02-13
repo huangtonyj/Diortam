@@ -1,9 +1,5 @@
-#App {
-  display: flex;
-}
-
-#ControlPanel {
-  flex: 1
+.App {
+  padding: 10px;
 }
 
 .slidecontainer {

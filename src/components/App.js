@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import mockAPI from '../api/mockAPI';
 import './App.css';
 import EventCard from './EventCard';
+import SearchBox from './SearchBox';
+import Slider from './Slider';
 
 class App extends Component {
 
@@ -32,6 +34,10 @@ class App extends Component {
     this.setState({minScore: e.target.value})
   }
 
+  onSearchInputChange = (e) => {
+    this.setState({searchTerm: e.target.value})
+  }
+
 
   render() {
     // eventsIndex
@@ -58,22 +64,15 @@ class App extends Component {
     return (
       <div className="App ui grid">
         <div className="four wide column">
-          <div class="ui icon input">
-            <input type="text" placeholder="Search..."/>
-            <i class="search icon"></i>
-          </div>
+          <SearchBox 
+            searchTerm={this.state.searchTerm}
+            onSearchInputChange={this.onSearchInputChange}
+          />
 
-          <div class="slidecontainer">
-            <input 
-              type="range" 
-              min="0" 
-              max="100" 
-              value={this.state.minScore}
-              onChange={(e) => this.onSliderChange(e)}
-              class="slider"
-            />
-            {this.state.minScore}
-          </div>
+          <Slider
+            minScore={this.state.minScore}
+            onSliderChange={this.onSliderChange}
+          />
           
         </div>
 
