@@ -4,7 +4,7 @@ import { Dropdown, Input } from 'semantic-ui-react'
 export default function InputFilter({filterOptions, searchTerm, onInputFilterChange}) {
   return (
     <Dropdown 
-      text= {searchTerm ? searchTerm : 'Filter Terms'}
+      text= {searchTerm ? searchTerm : 'Filter'}
       icon='filter' 
       floating labeled button 
       className='icon'

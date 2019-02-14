@@ -49,21 +49,23 @@ export default class EventCard extends Component {
     }
 
     return (
-      <div className="event-card">
+      <div className="event-card border">
         <h3>{toDateTime(timestamp).toLocaleString()}</h3>
-        <img 
-          src={imageSource}
-          alt={`${videoStream} ${timestamp}`}
-          onLoad={this.onImgLoad}
-        />
+        <div className="relative">
+          <img 
+            src={imageSource}
+            alt={`${videoStream} ${timestamp}`}
+            onLoad={this.onImgLoad}
+          />
 
-        {predictionBoxes}
-
+          {predictionBoxes}
+        </div>
+      
+      <div className="prediction-scores">
         {predictionScores}
-
       </div>
 
-      
+      </div>
     )
   }
 }

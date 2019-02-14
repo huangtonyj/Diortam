@@ -92,20 +92,23 @@ console.log(this.state);
     })
 
     return (
-      <div className="App ui grid">
-        <div className="four wide column padding">
+      <div className="App">
+        <div className="control-panel">
           <h2>Filter Options</h2>
+          
           <InputFilter 
             filterOptions={this.state.predictionLabels}
             searchTerm={this.state.searchTerm}
             onInputFilterChange={this.onInputFilterChange}
           />
+
           <Slider
             minScore={this.state.minScore}
             onSliderChange={this.onSliderChange}
           />
 
           <h2>Video Source</h2>
+          
           <ButtonGroup
             buttonsList={this.state.videoStreams}
             active={this.state.selectedVideoStream}
@@ -113,8 +116,9 @@ console.log(this.state);
           />         
         </div>
 
-        <div className = "twelve wide column">
-          <h2>Events</h2>
+        <div className = "events-index">
+          <h2>Events for {this.state.selectedVideoStream}</h2>
+
           {eventCards}
         </div>
 
