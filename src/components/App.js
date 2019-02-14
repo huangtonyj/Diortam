@@ -60,6 +60,7 @@ class App extends Component {
   }
 
   onInputFilterChange = (searchTerm) => {
+    searchTerm = searchTerm === '--CLEAR FILTER--' ? '' : searchTerm;
     this.setState({searchTerm})
   }
 
@@ -69,9 +70,37 @@ class App extends Component {
 
 
   render() {
-    console.log(this.state);
+console.log(this.state);
     
-    const eventCards = this.state.events[this.state.selectedVideoStream].map(event => {
+    // const eventCards = this.state.events[this.state.selectedVideoStream].map(event => {
+    //   const {timestamp, videoStream} = event;
+    //   return (
+    //     <EventCard
+    //       key={`${videoStream} ${timestamp}`}
+    //       event={event}
+    //     />
+    //   )
+    // })
+
+    const eventCards = this.state.events[this.state.selectedVideoStream]
+      .filter(event => {
+        if (this.state.searchTerm === '') {
+          return true;
+        }
+
+        const answer = event.predictions.some(prediction => {
+          prediction = prediction.scores.filter(score => {
+            // console.log(this.state.searchTerm, score.label, this.state.searchTerm === score.label)
+            return score.label === this.state.searchTerm && score.score >= this.state.minScore
+          })
+          console.log(prediction);
+          if (prediction.length > 0) return true;
+        })
+
+        return answer
+
+      })
+      .map(event => {
       const {timestamp, videoStream} = event;
       return (
         <EventCard
@@ -104,6 +133,7 @@ class App extends Component {
         </div>
 
         <div className = "twelve wide column">
+          <h2>Events</h2>
           {eventCards}
         </div>
 
