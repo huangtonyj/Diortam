@@ -70,14 +70,23 @@ class App extends Component {
   render() {
 console.log(this.state);
 
-    const eventCards = this.state.events[this.state.selectedVideoStream]
+    const {
+      predictionLabels,
+      searchTerm,
+      minScore,
+      videoStreams,
+      selectedVideoStream,
+      events,
+    } = this.state;
+
+    const eventCards = events[selectedVideoStream]
       .filter(event => {
-        if (this.state.searchTerm === '') { return true; }
+        if (searchTerm === '') { return true; }
 
         return event.predictions.some(prediction => {
           return prediction.scores.some(score => {
-             return score.label === this.state.searchTerm 
-                  && score.score >= this.state.minScore
+             return score.label === searchTerm 
+                  && score.score >= minScore
           })
         })
       })
@@ -97,27 +106,27 @@ console.log(this.state);
           <h2>Filter Options</h2>
           
           <InputFilter 
-            filterOptions={this.state.predictionLabels}
-            searchTerm={this.state.searchTerm}
+            filterOptions={predictionLabels}
+            searchTerm={searchTerm}
             onInputFilterChange={this.onInputFilterChange}
           />
 
           <Slider
-            minScore={this.state.minScore}
+            minScore={minScore}
             onSliderChange={this.onSliderChange}
           />
 
           <h2>Video Source</h2>
           
           <ButtonGroup
-            buttonsList={this.state.videoStreams}
-            active={this.state.selectedVideoStream}
+            buttonsList={videoStreams}
+            active={selectedVideoStream}
             onVideoStreamChange={this.onVideoStreamChange}
           />         
         </div>
 
         <div className = "events-index">
-          <h2>Events for {this.state.selectedVideoStream}</h2>
+          <h2>Events for {selectedVideoStream}</h2>
 
           {eventCards}
         </div>
