@@ -11,7 +11,7 @@ export default function Slider({minScore, onSliderChange}) {
         onChange={(e) => onSliderChange(e)}
         className="slider"
       />
-      {minScore}
+      <span> {minScore} </span>
     </div>
   )
 }

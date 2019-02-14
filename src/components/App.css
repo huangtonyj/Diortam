@@ -1,5 +1,5 @@
 body{
-  background-color: rgb(250, 250, 250);
+  /* background-color: rgb(250, 250, 250); */
 }
 
 .App {
@@ -21,16 +21,25 @@ body{
   flex: 3;
 }
 
+.divider {
+  width: 100%;
+  height: 1px;
+}
+
+.button {
+  width: 100%;
+}
+
 /* https://www.w3schools.com/howto/howto_js_rangeslider.asp */
 .slidecontainer {
-  width: 80%;
+  width: 100%;
   margin: 15px 0px 15px 0px;
-  /* Width of the outside container */
 }
 
 .slider {
   -webkit-appearance: none;
-  width: 100%;
+  margin: 3px;
+  width: 90%;
   height: 15px;
   border-radius: 5px;
   background: #d3d3d3;

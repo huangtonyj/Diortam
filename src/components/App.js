@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import mockAPI from '../api/mockAPI';
 import './App.css';
 
+import { Divider } from 'semantic-ui-react'
 import InputFilter from './InputFilter';
 import Slider from './Slider';
 import ButtonGroup from './ButtonGroup';
@@ -85,8 +86,7 @@ console.log(this.state);
 
         return event.predictions.some(prediction => {
           return prediction.scores.some(score => {
-             return score.label === searchTerm 
-                  && score.score >= minScore
+             return score.label === searchTerm && score.score >= minScore
           })
         })
       })
@@ -103,7 +103,9 @@ console.log(this.state);
     return (
       <div className="App">
         <div className="control-panel">
-          <h2>Filter Options</h2>
+          <Divider horizontal>
+            <h4>Filter Options</h4>
+          </Divider>
           
           <InputFilter 
             filterOptions={predictionLabels}
@@ -116,7 +118,9 @@ console.log(this.state);
             onSliderChange={this.onSliderChange}
           />
 
-          <h2>Video Source</h2>
+          <Divider horizontal>
+            <h4>Video Source</h4>
+          </Divider>
           
           <ButtonGroup
             buttonsList={videoStreams}
@@ -126,7 +130,9 @@ console.log(this.state);
         </div>
 
         <div className = "events-index">
-          <h2>Events for {selectedVideoStream}</h2>
+          <Divider horizontal>
+            <h1>Events for {selectedVideoStream}</h1>
+          </Divider>
 
           {eventCards}
         </div>
