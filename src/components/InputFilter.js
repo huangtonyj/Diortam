@@ -11,7 +11,7 @@ export default function InputFilter({filterOptions, searchTerm, onInputFilterCha
     >
     <Dropdown.Menu>
       <Dropdown.Menu scrolling>
-        {filterOptions.map(option => 
+        {['--CLEAR FILTER--', ...filterOptions].map(option => 
           <Dropdown.Item 
             key={option} 
             value={option}
