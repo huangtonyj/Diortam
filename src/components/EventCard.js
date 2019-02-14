@@ -41,8 +41,16 @@ export default class EventCard extends Component {
       )
     })
 
+    // https://stackoverflow.com/questions/4611754/javascript-convert-seconds-to-a-date-object/4611809
+    const toDateTime = (secs) =>  {
+      const t = new Date(1970, 0, 1);
+      t.setSeconds(secs);
+      return t;
+    }
+
     return (
       <div className="event-card">
+        <h3>{toDateTime(timestamp).toLocaleString()}</h3>
         <img 
           src={imageSource}
           alt={`${videoStream} ${timestamp}`}
