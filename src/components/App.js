@@ -12,12 +12,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      predictionLabels: [],
       searchTerm: '',
       minScore: 70,
-      events: {'': []},
       videoStreams: [],
       selectedVideoStream: '',
-      predictionLabels: [],
+      events: {'': []},
     }
   }
 
@@ -27,21 +27,19 @@ class App extends Component {
     const predictionLabels = new Set();
 
     response.mockResponse.events.forEach(({imageSource, predictions, timestamp, videoStream}) => {
-      // const currentPredictionLabels = new Set();
       
       predictions.forEach(prediction => {
-          prediction.scores.forEach(score => {
-            // currentPredictionLabels.add(score.label);
-            predictionLabels.add(score.label);
-          })
+        prediction.scores.forEach(score => {
+          predictionLabels.add(score.label);
+        })
       })
 
       if (!events[videoStream]) { events[videoStream] = []; }
+      
       events[videoStream].push({
         timestamp,
         imageSource,
         predictions,
-        // currentPredictionLabels
       });
     });
 
@@ -71,34 +69,17 @@ class App extends Component {
 
   render() {
 console.log(this.state);
-    
-    // const eventCards = this.state.events[this.state.selectedVideoStream].map(event => {
-    //   const {timestamp, videoStream} = event;
-    //   return (
-    //     <EventCard
-    //       key={`${videoStream} ${timestamp}`}
-    //       event={event}
-    //     />
-    //   )
-    // })
 
     const eventCards = this.state.events[this.state.selectedVideoStream]
       .filter(event => {
-        if (this.state.searchTerm === '') {
-          return true;
-        }
+        if (this.state.searchTerm === '') { return true; }
 
-        const answer = event.predictions.some(prediction => {
-          prediction = prediction.scores.filter(score => {
-            // console.log(this.state.searchTerm, score.label, this.state.searchTerm === score.label)
-            return score.label === this.state.searchTerm && score.score >= this.state.minScore
+        return event.predictions.some(prediction => {
+          return prediction.scores.some(score => {
+             return score.label === this.state.searchTerm 
+                  && score.score >= this.state.minScore
           })
-          console.log(prediction);
-          if (prediction.length > 0) return true;
         })
-
-        return answer
-
       })
       .map(event => {
       const {timestamp, videoStream} = event;
