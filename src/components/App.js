@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import mockAPI from '../api/mockAPI';
 import './App.css';
+
 import InputFilter from './InputFilter';
 import Slider from './Slider';
 import ButtonGroup from './ButtonGroup';
-import FilterList from './FilterList';
 import EventCard from './EventCard';
 
 class App extends Component {
@@ -18,7 +18,6 @@ class App extends Component {
       videoStreams: [],
       selectedVideoStream: '',
       predictionLabels: [],
-      filteredEvents: []
     }
   }
 
@@ -28,23 +27,21 @@ class App extends Component {
     const predictionLabels = new Set();
 
     response.mockResponse.events.forEach(({imageSource, predictions, timestamp, videoStream}) => {
-      const currentPredictionLabels = new Set();
+      // const currentPredictionLabels = new Set();
       
       predictions.forEach(prediction => {
           prediction.scores.forEach(score => {
-            currentPredictionLabels.add(score.label);
+            // currentPredictionLabels.add(score.label);
             predictionLabels.add(score.label);
           })
       })
-
-
 
       if (!events[videoStream]) { events[videoStream] = []; }
       events[videoStream].push({
         timestamp,
         imageSource,
         predictions,
-        currentPredictionLabels
+        // currentPredictionLabels
       });
     });
 
@@ -56,9 +53,6 @@ class App extends Component {
       selectedVideoStream: videoStreams[0],
       predictionLabels: [...predictionLabels],
     })
-      
-    // const events = await mockAPI();
-    // this.setState({events: events.mockResponse.events})
   };
 
   onSliderChange = (e) => {
@@ -90,30 +84,23 @@ class App extends Component {
     return (
       <div className="App ui grid">
         <div className="four wide column padding">
+          <h2>Filter Options</h2>
           <InputFilter 
             filterOptions={this.state.predictionLabels}
             searchTerm={this.state.searchTerm}
             onInputFilterChange={this.onInputFilterChange}
           />
-
           <Slider
             minScore={this.state.minScore}
             onSliderChange={this.onSliderChange}
           />
 
-        <h2>Video Source</h2>
-         <ButtonGroup
-          buttonsList={this.state.videoStreams}
-          active={this.state.selectedVideoStream}
-          onVideoStreamChange={this.onVideoStreamChange}
-         />
-
-
-
-          {/* <FilterList        /> */}
-
-
-          
+          <h2>Video Source</h2>
+          <ButtonGroup
+            buttonsList={this.state.videoStreams}
+            active={this.state.selectedVideoStream}
+            onVideoStreamChange={this.onVideoStreamChange}
+          />         
         </div>
 
         <div className = "twelve wide column">
