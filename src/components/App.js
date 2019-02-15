@@ -117,7 +117,8 @@ console.log(this.state);
           </Divider>
 
           <EventIndex
-            events={events[selectedVideoStream]}
+            // Pass array of selected videoSource events
+            events={events[selectedVideoStream]} 
             searchTerm={searchTerm}
             minScore={minScore}
           />
