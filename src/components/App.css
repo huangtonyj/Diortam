@@ -48,6 +48,10 @@
   cursor: pointer;
 }
 
+.prediction-score {
+  background-color: rgba(160, 160, 160, 0.2);
+}
+
 img {
   width: 100%;
 }

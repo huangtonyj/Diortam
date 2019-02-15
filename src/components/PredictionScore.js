@@ -15,7 +15,7 @@ export default function PredictionScore({scores, idx, color}) {
   })
 
   return (
-    <table className="border inline-block" style={{borderColor: `${color}`}}>
+    <table className="prediction-score border inline-block" style={{borderColor: `${color}`}}>
       <th><h4>{idx}</h4></th>
       {scores}
     </table>
