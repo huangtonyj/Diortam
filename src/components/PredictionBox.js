@@ -1,20 +1,40 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { Button, Popup } from 'semantic-ui-react'
 
-export default function PredictionBox({img, boundingBox, idx, color}) {
-  return (
-    <div className="prediction-box"
-      style={{
-        top: `${img.h * boundingBox.top}px`,
-        left: `${img.w * boundingBox.left}px`,
-        height: `${img.h * boundingBox.height}px`,
-        width: `${img.w * boundingBox.width}px`,
-        border: `1px solid ${color}`,
-        color: `${color}`
-      }}
-    >
+export default class PredictionBox extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      contextMenuVisible: false
+    }
+  }
 
-      {idx}
+  render() {
+    const {img, boundingBox, idx, color} = this.props;
 
-    </div>
-  )
+    return (
+      <Popup
+        trigger={
+          <div className="prediction-box"
+            style={{
+              top: `${img.h * boundingBox.top}px`,
+              left: `${img.w * boundingBox.left}px`,
+              height: `${img.h * boundingBox.height}px`,
+              width: `${img.w * boundingBox.width}px`,
+              border: `1px solid ${color}`,
+              color: `${color}`
+            }}
+          > {idx}
+          </div>
+        }
+        content={
+          <Button 
+            color="red"
+            onClick={() => console.log('Reporting error with POST request')}
+          >Report error</Button>}
+        on='click'
+        hideOnScroll
+      />
+    )
+  }
 }
