@@ -28,10 +28,17 @@ export default class PredictionBox extends Component {
           </div>
         }
         content={
-          <Button 
-            color="red"
-            onClick={() => console.log('Reporting error with POST request')}
-          >Report error</Button>}
+          <div>
+            <Button 
+              color="green"
+              onClick={() => console.log('Reporting accurate prediction with POST request')}
+              >Report accurate</Button>
+            <Button 
+              color="red"
+              onClick={() => console.log('Reporting error with POST request')}
+            >Report error</Button>
+          </div>
+        }
         on='click'
         hideOnScroll
       />
