@@ -6,7 +6,7 @@ import { Divider } from 'semantic-ui-react'
 import InputFilter from './InputFilter';
 import Slider from './Slider';
 import ButtonGroup from './ButtonGroup';
-import EventCard from './EventCard';
+import EventIndex from './EventIndex';
 
 class App extends Component {
 
@@ -23,20 +23,22 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const response = await mockAPI();
+    // Create a fake async API request
+    const response = await mockAPI(); 
     const events = {};
     const predictionLabels = new Set();
 
     response.mockResponse.events.forEach(({imageSource, predictions, timestamp, videoStream}) => {
       
+      // Generate a list of labels to filter by.
       predictions.forEach(prediction => {
         prediction.scores.forEach(score => {
           predictionLabels.add(score.label);
         })
       })
 
+      // Dissect arr of events data and classify it by videoStream for fast filtering
       if (!events[videoStream]) { events[videoStream] = []; }
-      
       events[videoStream].push({
         timestamp,
         imageSource,
@@ -80,26 +82,6 @@ console.log(this.state);
       events,
     } = this.state;
 
-    const eventCards = events[selectedVideoStream]
-      .filter(event => {
-        if (searchTerm === '') { return true; }
-
-        return event.predictions.some(prediction => {
-          return prediction.scores.some(score => {
-             return score.label === searchTerm && score.score >= minScore
-          })
-        })
-      })
-      .map(event => {
-      const {timestamp, videoStream} = event;
-      return (
-        <EventCard
-          key={`${videoStream} ${timestamp}`}
-          event={event}
-        />
-      )
-    })
-
     return (
       <div className="App">
         <div className="control-panel">
@@ -134,7 +116,11 @@ console.log(this.state);
             <h1>Events for {selectedVideoStream}</h1>
           </Divider>
 
-          {eventCards}
+          <EventIndex
+            events={events[selectedVideoStream]}
+            searchTerm={searchTerm}
+            minScore={minScore}
+          />
         </div>
 
       </div>
