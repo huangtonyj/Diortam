@@ -117,6 +117,11 @@ body{
   z-index: 2;
 }
 
+.prediction-box:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
 img {
   width: 100%;
 }
